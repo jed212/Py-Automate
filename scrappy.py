@@ -3,16 +3,21 @@ from selenium import webdriver
 from bs4 import BeautifulSoup
 import pandas as pd
 
-driver = webdriver.Chrome("/usr/bin/chromedriver")
+chrome_options = webdriver.ChromeOptions()
+chrome_options.add_argument('--headless')
+
+chromedriver_path = "/usr/bin/chromedriver"
+chrome_service = webdriver.chrome.service.Service(executable_path=chromedriver_path)
+driver = webdriver.Chrome(service=chrome_service, options=chrome_options)
 
 products = []
 ratings = []
 prices = []
 
-url = 'https://www.jumia.co.ke/nourishing-cocoa-body-lotion-with-cocoa-butter-400ml-pack-of-2-nivea-mpg434442.html'
+url = 'https://www.jumia.co.ke/catalog/?q=face+masks'
 driver.get(url)
 
 data = driver.page_source
-soup = BeautifulSoup(data)
+soup = BeautifulSoup(data, features="html.parser")
 
-for a in soup.findAll('a', href=True, attr ={}):
+# for a in soup.findAll('a', href=True, attr ={}):
