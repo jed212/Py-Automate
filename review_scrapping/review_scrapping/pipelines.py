@@ -65,4 +65,3 @@ class PostgresNoDuplicatesPipeline:
         ## Close cursor & connection to database
         self.cur.close()
         self.connection.close()
-        return item
